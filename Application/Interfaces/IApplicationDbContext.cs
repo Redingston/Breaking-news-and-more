@@ -9,13 +9,13 @@ namespace Application.Interfaces
     {
         DbSet<Category> Categories { get; set; }
         DbSet<Comment> Comments { get; set; }
-        DbSet<News> BreakingNews { get; set; }
+        DbSet<Domain.Entities.News> BreakingNews { get; set; }
         DbSet<NewsToCategory> NewsToCategories { get; set; }
         DbSet<NewsToReaction> NewsToReactions { get; set; }
         DbSet<NewsToTag> NewsToTags { get; set; }
         DbSet<NewsToUser> NewsToUsers { get; set; }
         DbSet<Reaction> Reactions { get; set; }
         DbSet<Tag> Tags { get; set; }
-        //Task<string> SaveChangesAsync(CancellationToken cancellationToken = default);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

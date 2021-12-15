@@ -12,7 +12,10 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Application;
+using Application.BreakingNews.Queries;
+//using Application.Users.Commands;
 using Application.Interfaces;
+//using Application.Users.Queries;
 using Domain.Entities;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Repositories;
@@ -38,7 +41,12 @@ namespace WebUI
             services.AddOptions();
             services.AddApplication();
             services.AddHttpContextAccessor();
+           // var assembly = AppDomain.CurrentDomain.Load("Application");
             services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
+            services.AddScoped(typeof(IApplicationDbContext), typeof(ApplicationDbContext));
+           // services.AddMediatR(typeof(GetAllNewsQuery).GetTypeInfo().Assembly);
+
+            // services.AddTransient<INotifierMediatorService, NotifierMediatorService>();
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
@@ -75,7 +83,8 @@ namespace WebUI
                 });
             });
 
-            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
+          //  services.AddTransient(typeof(IUserRepository), typeof(UserRepository));
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
