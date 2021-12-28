@@ -41,17 +41,21 @@ namespace WebUI
             services.AddOptions();
             services.AddApplication();
             services.AddHttpContextAccessor();
-           // var assembly = AppDomain.CurrentDomain.Load("Application");
-            services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
+            var assembly = AppDomain.CurrentDomain.Load("Application");
+          //  services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
             services.AddScoped(typeof(IApplicationDbContext), typeof(ApplicationDbContext));
-           // services.AddMediatR(typeof(GetAllNewsQuery).GetTypeInfo().Assembly);
+            services.AddMediatR(assembly);
 
             // services.AddTransient<INotifierMediatorService, NotifierMediatorService>();
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
-            services.AddControllers();
+            services.AddControllers()
+                    .AddNewtonsoftJson(options =>
+                                           options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            )
+                    ;
             var connectionStringName = "BNAMDataBase";
             var connectionString = Configuration.GetConnectionString(connectionStringName);
 
@@ -83,8 +87,17 @@ namespace WebUI
                 });
             });
 
-          //  services.AddTransient(typeof(IUserRepository), typeof(UserRepository));
-            
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                                  builder => builder
+                                             .AllowAnyOrigin()
+                                             .AllowAnyMethod()
+                                             .AllowAnyHeader()
+                                             .Build());
+            });
+            //  services.AddTransient(typeof(IUserRepository), typeof(UserRepository));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -101,6 +114,8 @@ namespace WebUI
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "BNAM API V1");
             });
+
+            app.UseCors("CorsPolicy");
 
             if (env.IsDevelopment())
             {

@@ -15,11 +15,11 @@
 
 //        public sealed class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, string>
 //        {
-//            private readonly IUserRepository _repository;
+//            private readonly IApplicationDbContext context;
 
-//            public CreateUserCommandHandler(IUserRepository repository)
+//            public CreateUserCommandHandler(IApplicationDbContext context)
 //            {
-//                _repository = repository;
+//                this.context = context;
 //            }
 
 //            public async Task<string> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -30,9 +30,9 @@
 //                    Email = request.Email,
 //                    PasswordHash = request.Password
 //                };
-//                 _repository.CreateUser(user);
-//                await _repository.SaveChangesAsync(cancellationToken);
-//                return  user.Id;
+
+//                await context.SaveChangesAsync(cancellationToken);
+//                return user.Id;
 //            }
 //        }
 //    }

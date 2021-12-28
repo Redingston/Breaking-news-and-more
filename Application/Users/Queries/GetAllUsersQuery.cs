@@ -15,17 +15,15 @@
 //{
 //    public class GetAllUsersQuery : IRequest<List<UserVm>>
 //    {
-       
+
 //    }
 //    public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, List<UserVm>>
 //    {
 //        private readonly IUserRepository _context;
-//        private readonly IMapper _mapper;
 
 //        public GetAllUsersQueryHandler(IUserRepository context, IMapper mapper, IdentityDbContext<User> c)
 //        {
 //            _context = context;
-//            _mapper = mapper;
 //        }
 
 //        public async Task<List<UserVm>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)

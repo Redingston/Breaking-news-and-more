@@ -21,9 +21,27 @@ namespace WebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<string>> GetAllUser()
+        public async Task<ActionResult<List<BreakingNewsVm>>> GetAllNews()
         {
-            return Ok(Mediator.Send(new GetAllNewsQuery()));
+            return await Mediator.Send(new GetAllNewsQuery());
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<BreakingNewsVm>> GetNewsById(string newsId)
+        {
+            return await Mediator.Send(new GetNewsById {Id = newsId});
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<string>> UpdateNews([FromBody] UpdateNewsCommand command)
+        {
+            return await Mediator.Send(command);
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<string>> DeleteNews(string newsId)
+        {
+            return await Mediator.Send(new DeleteNewsCommand {Id = newsId});
         }
     }
 }

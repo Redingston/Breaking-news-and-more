@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
+using AutoMapper;
 
 namespace Application
 {
@@ -8,9 +9,9 @@ namespace Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-           // services.AddAutomaper(Assembly.GetExecutingAssembly());
+          //  services.AddAutoMapper(Assembly.GetExecutingAssembly());
             //services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-           // services.AddMediatrR(Assembly.GetExecutingAssembly());
+          //  services.AddMediatrR(Assembly.GetExecutingAssembly());
 
             return services;
         }

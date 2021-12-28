@@ -2,9 +2,12 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Helpers;
 using Application.Interfaces;
 using AutoMapper;
+using AutoMapper.Internal;
 using AutoMapper.QueryableExtensions;
+using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,29 +15,31 @@ namespace Application.BreakingNews.Queries
 {
     public class GetAllNewsQuery : IRequest<List<BreakingNewsVm>>
     {
+    }
 
+    public sealed class GetAllNewsQueryHandler : IRequestHandler<GetAllNewsQuery, List<BreakingNewsVm>>
+    {
+        private IApplicationDbContext _context;
+        //private IMapper _mapper;
 
-
-        public sealed class GetAllNewsQueryHandler : IRequestHandler<GetAllNewsQuery, List<BreakingNewsVm>>
+        public GetAllNewsQueryHandler(IApplicationDbContext context)
         {
-            private IApplicationDbContext _context;
-            private IMapper _mapper;
+            _context = context;
+            // _mapper = mapper;
+        }
 
-            public GetAllNewsQueryHandler(IApplicationDbContext context, IMapper mapper)
+        public async Task<List<BreakingNewsVm>> Handle(GetAllNewsQuery request,
+                                                       CancellationToken cancellationToken)
+        {
+            var news = await _context.BreakingNews.AsNoTracking().ToListAsync(cancellationToken);
+            var list = new List<BreakingNewsVm>();
+
+            foreach (var t in news)
             {
-                _context = context;
-                _mapper = mapper;
+                list.Add(t.Mapping<News, BreakingNewsVm>());
             }
 
-            public async Task<List<BreakingNewsVm>> Handle(GetAllNewsQuery request,
-                                                           CancellationToken cancellationToken)
-            {
-                List<BreakingNewsVm> news = await _context.BreakingNews
-                                                          .ProjectTo<BreakingNewsVm>(_mapper.ConfigurationProvider)
-                                                          .ToListAsync();
-
-                return news;
-            }
+            return list;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces;
 using MediatR;
@@ -24,9 +25,11 @@ namespace Application.BreakingNews.Commands
         {
             var news = new Domain.Entities.News()
             {
+                Id = Guid.NewGuid().ToString(),
                 Text = request.Text,
-                Topic = request.Topic
-            };
+                Topic = request.Topic,
+                TimeCreated = DateTime.Now.ToString("dddd, MMMM dd, yyyy, HH:mm:ss")
+        };
 
             await context.BreakingNews.AddAsync(news);
 
