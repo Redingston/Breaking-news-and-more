@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Application.Common.Exceptions;
+using Application.Interfaces;
+using Domain.Entities;
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.BreakingNews.Commands
 {
@@ -12,38 +13,43 @@ namespace Application.BreakingNews.Commands
         public string Id { get; set; }
         public string Topic { get; set; }
         public string Text { get; set; }
-    }
 
-    public sealed class UpdateNewsCommandHandler : IRequestHandler<UpdateNewsCommand, string>
-    {
-        private readonly IApplicationDbContext context;
-
-        public UpdateNewsCommandHandler(IApplicationDbContext context)
+        public sealed class UpdateNewsCommandHandler : IRequestHandler<UpdateNewsCommand, string>
         {
-            this.context = context;
-        }
-        public async Task<string> Handle(UpdateNewsCommand request, CancellationToken cancellationToken)
-        {
-            var updatedNews = await context.BreakingNews
-                                           .FirstOrDefaultAsync(x => 
-                                                                    x.Id == request.Id, cancellationToken);
+            private readonly IRepository<News, string> _repository;
 
-            if (request.Topic != updatedNews.Topic )
+            public UpdateNewsCommandHandler(IRepository<News, string> repository)
             {
-                updatedNews.Topic = request.Topic;
-                updatedNews.LastTimeUpdated = DateTime.Now.ToString("dddd, MMMM dd, yyyy, HH:mm:ss");
+                _repository = repository;
             }
 
-            if (request.Text != updatedNews.Text)
+            public async Task<string> Handle(UpdateNewsCommand request, CancellationToken cancellationToken)
             {
-                updatedNews.Text = request.Text;
-                updatedNews.LastTimeUpdated = DateTime.Now.ToString("dddd, MMMM dd, yyyy, HH:mm:ss");
+                var updatedNews = await _repository.FindFirstOrDefaultAsync(request.Id);
+
+                if (updatedNews == null)
+                {
+                    string entityName = "News";
+                    throw new NotFoundException(entityName, request.Id);
+                }
+
+                if (request.Topic != updatedNews.Topic)
+                {
+                    updatedNews.Topic = request.Topic;
+                    updatedNews.LastTimeUpdated = DateTime.Now.ToString("dddd, MMMM dd, yyyy, HH:mm:ss");
+                }
+
+                if (request.Text != updatedNews.Text)
+                {
+                    updatedNews.Text = request.Text;
+                    updatedNews.LastTimeUpdated = DateTime.Now.ToString("dddd, MMMM dd, yyyy, HH:mm:ss");
+                }
+
+                _repository.Update(updatedNews);
+                await _repository.SaveChangesAsync(cancellationToken);
+
+                return updatedNews.Id;
             }
-
-            context.BreakingNews.Update(updatedNews);
-            await context.SaveChangesAsync(cancellationToken);
-
-            return updatedNews.Id;
         }
     }
 }

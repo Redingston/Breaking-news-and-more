@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Application.BreakingNews.Commands;
 using Application.BreakingNews.Queries;
@@ -10,8 +7,6 @@ using WebUI.Controllers.Api;
 
 namespace WebUI.Controllers
 {
-    
-
     public class NewsController : BaseApiController
     {
         [HttpPost]
@@ -27,9 +22,9 @@ namespace WebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<BreakingNewsVm>> GetNewsById(string newsId)
+        public async Task<ActionResult<BreakingNewsFullInfoVm>> GetNewsById(string newsId)
         {
-            return await Mediator.Send(new GetNewsById {Id = newsId});
+            return await Mediator.Send(new GetNewsByIdQuery {Id = newsId});
         }
 
         [HttpPut]
@@ -39,9 +34,10 @@ namespace WebUI.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult<string>> DeleteNews(string newsId)
+        public async Task<ActionResult> DeleteNews(string newsId)
         {
-            return await Mediator.Send(new DeleteNewsCommand {Id = newsId});
+            await Mediator.Send(new DeleteNewsCommand { Id = newsId });
+            return NoContent();
         }
     }
 }

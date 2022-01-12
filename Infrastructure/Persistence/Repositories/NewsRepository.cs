@@ -3,55 +3,55 @@ using Domain.Entities;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repositories
 {
-    public class NewsRepository : INewssRepository
+    public class NewsRepository : IRepository<News, string>
     {
         private ApplicationDbContext context;
+
         public NewsRepository(ApplicationDbContext context)
         {
             this.context = context;
         }
-        public  string CreateUser(News news)
-        {
 
-            return news.Id;
+        public void Delete(News entity)
+        {
+            context.Remove(entity);
         }
 
-        public string DeleteUser(string userId)
+        public async Task<News> FindFirstOrDefaultAsync(string id)
         {
-            throw new System.NotImplementedException();
+            return await context.BreakingNews.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public void Dispose()
+        public async Task<IEnumerable<News>> GetAllAsync(CancellationToken token)
         {
-            throw new System.NotImplementedException();
+            return await context.BreakingNews.ToListAsync(token);
         }
 
-        public IEnumerable<News> GetAllNews()
+        public async Task<News> GetByIdAsync(string id)
         {
-            throw new System.NotImplementedException();
+            return await context.BreakingNews.FindAsync(id);
         }
 
-        public News GetUserById(string userId)
+        public async Task<News> Insert(News entity)
         {
-            throw new System.NotImplementedException();
+            await context.BreakingNews.AddAsync(entity);
+            return entity;
         }
 
-        public int Save()
+        public async Task<int> SaveChangesAsync(CancellationToken token)
         {
-            throw new System.NotImplementedException();
+           return await context.SaveChangesAsync(token);
         }
 
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        public News Update(News entity)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public string UpdateUser(News user)
-        {
-            throw new System.NotImplementedException();
+            context.BreakingNews.Update(entity);
+            return entity;
         }
     }
 }

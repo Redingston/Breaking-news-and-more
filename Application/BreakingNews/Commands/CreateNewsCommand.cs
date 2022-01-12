@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces;
+using Domain.Entities;
 using MediatR;
 
 namespace Application.BreakingNews.Commands
@@ -10,32 +11,32 @@ namespace Application.BreakingNews.Commands
     {
         public string Topic { get; set; }
         public string Text { get; set; }
-    }
 
-    public sealed class CreateNewsCommandHandler : IRequestHandler<CreateNewsCommand, string>
-    {
-        private readonly IApplicationDbContext context;
-
-        public CreateNewsCommandHandler(IApplicationDbContext context)
+        public sealed class CreateNewsCommandHandler : IRequestHandler<CreateNewsCommand, string>
         {
-            this.context = context;
-        }
+            private readonly IRepository<News, string> _repository;
 
-        public async Task<string> Handle(CreateNewsCommand request, CancellationToken cancellationToken)
-        {
-            var news = new Domain.Entities.News()
+            public CreateNewsCommandHandler(IRepository<News, string> repository)
             {
-                Id = Guid.NewGuid().ToString(),
-                Text = request.Text,
-                Topic = request.Topic,
-                TimeCreated = DateTime.Now.ToString("dddd, MMMM dd, yyyy, HH:mm:ss")
-        };
+                _repository = repository;
+            }
 
-            await context.BreakingNews.AddAsync(news);
+            public async Task<string> Handle(CreateNewsCommand request, CancellationToken cancellationToken)
+            {
+                var news = new Domain.Entities.News()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Text = request.Text,
+                    Topic = request.Topic,
+                    TimeCreated = DateTime.Now.ToString("dddd, MMMM dd, yyyy, HH:mm:ss")
+                };
 
-            await context.SaveChangesAsync(cancellationToken);
+                await _repository.Insert(news);
 
-            return news.Id;
+                await _repository.SaveChangesAsync(cancellationToken);
+
+                return news.Id;
+            }
         }
     }
 }

@@ -1,37 +1,41 @@
-﻿using Application.Interfaces;
+﻿using System;
+using Application.Interfaces;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Common.Exceptions;
+using Application.Interfaces;
+using Domain.Entities;
 
 namespace Application.BreakingNews.Commands
 {
-    public class DeleteNewsCommand : IRequest<string>
+    public class DeleteNewsCommand : IRequest
     {
         public string Id { get; set; }
-    }
 
-    public sealed class DeleteNewsCommandHandler : IRequestHandler<DeleteNewsCommand, string>
-    {
-        private readonly IApplicationDbContext context;
-
-        public DeleteNewsCommandHandler(IApplicationDbContext context)
+        public sealed class DeleteNewsCommandHandler : IRequestHandler<DeleteNewsCommand>
         {
-            this.context = context;
-        }
+            private readonly IRepository<News, string> _repository;
 
-        public async Task<string> Handle(DeleteNewsCommand request, CancellationToken cancellationToken)
-        {
-            var deletedNews = await context.BreakingNews.FindAsync(request.Id);
-
-            if (deletedNews == null)
+            public DeleteNewsCommandHandler(IRepository<News, string> repository)
             {
-                return "News not found";
+                _repository = repository;
             }
 
-            context.BreakingNews.Remove(deletedNews);
-            await context.SaveChangesAsync(cancellationToken);
+            public async Task<Unit> Handle(DeleteNewsCommand request, CancellationToken cancellationToken)
+            {
+                var deletedNews = await _repository.FindFirstOrDefaultAsync(request.Id);
 
-            return "News was successfully deleted";
+                if (deletedNews == null)
+                {
+                    string entityName = "News";
+                    throw new NotFoundException(entityName, request.Id);
+                }
+
+                _repository.Delete(deletedNews);
+                await _repository.SaveChangesAsync(cancellationToken);
+                return Unit.Value;
+            }
         }
     }
 }

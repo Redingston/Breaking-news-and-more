@@ -1,21 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Swashbuckle.Swagger;
 using MediatR;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using Application;
-using Application.BreakingNews.Queries;
-//using Application.Users.Commands;
 using Application.Interfaces;
-//using Application.Users.Queries;
 using Domain.Entities;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Repositories;
@@ -96,8 +88,10 @@ namespace WebUI
                                              .AllowAnyHeader()
                                              .Build());
             });
-            //  services.AddTransient(typeof(IUserRepository), typeof(UserRepository));
 
+            services.AddScoped<IRepository<News, string>, NewsRepository>();
+            services.AddScoped<IRepository<Tag, string>, TagRepository>();
+            services.AddScoped<IUserRepository<User, string>, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

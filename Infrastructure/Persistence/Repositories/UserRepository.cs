@@ -1,80 +1,41 @@
 ﻿using Application.Interfaces;
 using Domain.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Application.Common.Models;
+using Application.Helpers;
 
 namespace Infrastructure.Persistence.Repositories
 {
-    public class UserRepository : IUserRepository, IDisposable
+    public class UserRepository : IUserRepository<User, string>
     {
-        private ApplicationDbContext context;
+        private readonly UserManager<User> _userManager;
+        // private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserRepository(ApplicationDbContext context)
+        public UserRepository(UserManager<User> userManager)
         {
-            this.context = context;
+            _userManager = userManager;
         }
 
-        public void CreateUser(User user)
+        public async Task<(Result Result, string UserId)> CreateUserAsync(User user, string password)
         {
-            context.Users.Add(user);
+            var result = await _userManager.CreateAsync(user, password);
+
+            return (result.ToApplicationResult(), user.Id);
         }
 
-        public void DeleteUser(string userId)
+        public async Task<User> FindUserAsync(string userId)
         {
-            User deletedUser = context.Users.Find(userId);
-            context.Users.Remove(deletedUser);
+            return await _userManager.FindByIdAsync(userId);
         }
 
-        
-
-        public User GetUserById(string userId)
+        public async Task<(Result Result, string UserId)> UpdateUserAsync(User user)
         {
-            return context.Users.Find(userId);
-        }
+            var result = await _userManager.UpdateAsync(user);
 
-        public IEnumerable<User> GetUsers()
-        {
-            return context.Users.ToList();
-        }
-
-        public void Save()
-        {
-            context.SaveChanges();
-        }
-
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
-        {
-          return context.SaveChangesAsync(cancellationToken);
-        }
-
-        public void UpdateUser(User user)
-        {
-            context.Entry(user).State = EntityState.Modified;
-        }
-
-        private bool disposed = false;
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    context.Dispose();
-                }
-            }
-
-            this.disposed = true;
+            return (result.ToApplicationResult(), user.Id);
         }
     }
 }
