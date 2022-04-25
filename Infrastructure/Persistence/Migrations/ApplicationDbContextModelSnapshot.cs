@@ -32,6 +32,38 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "2f79c615-8d86-496e-a467-88a4573b6dd4",
+                            Name = "Top news"
+                        },
+                        new
+                        {
+                            Id = "cf945d56-273f-475f-9210-240095c0b8e2",
+                            Name = "Sports"
+                        },
+                        new
+                        {
+                            Id = "c1d45dc1-ee65-447e-89ea-cfbd96222262",
+                            Name = "Science"
+                        },
+                        new
+                        {
+                            Id = "055af927-c448-40f3-a6cf-9a18f92b87a9",
+                            Name = "Technology"
+                        },
+                        new
+                        {
+                            Id = "1bc9bf9d-a3cf-4b90-b39a-adf9990c1a76",
+                            Name = "Movies"
+                        },
+                        new
+                        {
+                            Id = "596a95bf-3100-4fc5-a009-bc5fecd85da4",
+                            Name = "Game's news"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Comment", b =>
@@ -64,7 +96,13 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("LastTimeUpdated")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TimeCreated")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Topic")
@@ -168,6 +206,44 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tags");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b57261e7-3b29-451c-af3d-ca529c88c20b",
+                            Color = "#FFD133",
+                            Name = "Popular"
+                        },
+                        new
+                        {
+                            Id = "7ea6afd4-170f-468d-9ce0-fae278c411dd",
+                            Color = "#33BBFF",
+                            Name = "Education"
+                        },
+                        new
+                        {
+                            Id = "eed4993d-d28e-4b98-ac3c-8ddd34d79356",
+                            Color = "#6833FF",
+                            Name = "Unbelievable"
+                        },
+                        new
+                        {
+                            Id = "1a4a90c9-43a5-4c9c-994d-0756a7c7b8f3",
+                            Color = "#07BA1F",
+                            Name = "Useful"
+                        },
+                        new
+                        {
+                            Id = "62f57043-fc7a-4f9a-9572-40c9120abc27",
+                            Color = "#000000",
+                            Name = "Issue"
+                        },
+                        new
+                        {
+                            Id = "1920993f-017d-4b71-af7f-0e4005b05d1c",
+                            Color = "#FF0000",
+                            Name = "Non Popular"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>

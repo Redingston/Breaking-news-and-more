@@ -11,7 +11,7 @@ namespace Infrastructure.Persistence
 {
     public class ApplicationDbContext : IdentityDbContext<User>, IApplicationDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
 
@@ -24,7 +24,8 @@ namespace Infrastructure.Persistence
         public DbSet<NewsToUser> NewsToUsers { get; set; }
         public DbSet<Reaction> Reactions { get; set; }
         public DbSet<Tag> Tags { get; set; }
-       //public DbSet<User> Users { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+        //public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
