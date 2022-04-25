@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Domain.Entities;
 
-namespace Application.BreakingNews.Queries
+namespace Application.DTO.NewsDTO
 {
-    public class BreakingNewsFullInfoVm 
+    public class BreakingNewsFullInfoDTO 
     {
         public string Id { get; set; }
         public string Topic { get; set; }

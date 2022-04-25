@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.BreakingNews.Commands;
-using Application.BreakingNews.Queries;
 using Application.Interfaces;
 using Domain.Entities;
 using FluentAssertions;
@@ -42,14 +41,12 @@ namespace Application.UnitTests.BLLApplication.BreakingNews.CommandsTests
             var result = await _sut.Handle(request, CancellationToken.None);
 
             result.Should().NotBeNull();
-           // result.Should().Be(entity.Id);
         }
 
         public void SetupInsert()
         {
             _mockContext.Setup(x => x.Insert(WithNews()))
                         .ReturnsAsync(WithNews);
-                       // .Verifiable();
         }
 
         public void SetupSaveChanges()

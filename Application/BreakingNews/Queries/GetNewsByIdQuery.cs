@@ -1,20 +1,19 @@
-﻿using System.Linq;
+﻿using Application.DTO.NewsDTO;
+using Application.Common.Exceptions;
+using Application.Helpers;
+using Application.Interfaces.Repositories;
+using Domain.Entities;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Common.Exceptions;
-using Application.Helpers;
-using Application.Interfaces;
-using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.BreakingNews.Queries
 {
-    public class GetNewsByIdQuery : IRequest<BreakingNewsFullInfoVm>
+    public class GetNewsByIdQuery : IRequest<BreakingNewsFullInfoDTO>
     {
         public string Id { get; set; }
 
-        public class GetNewsByIdQueryHandler : IRequestHandler<GetNewsByIdQuery, BreakingNewsFullInfoVm>
+        public class GetNewsByIdQueryHandler : IRequestHandler<GetNewsByIdQuery, BreakingNewsFullInfoDTO>
         {
             private readonly IRepository<News, string> repository;
 
@@ -23,7 +22,7 @@ namespace Application.BreakingNews.Queries
                 this.repository = repository;
             }
 
-            public async Task<BreakingNewsFullInfoVm> Handle(GetNewsByIdQuery request, CancellationToken cancellationToken)
+            public async Task<BreakingNewsFullInfoDTO> Handle(GetNewsByIdQuery request, CancellationToken cancellationToken)
             {
                 var item = await repository.GetByIdAsync(request.Id);
 
@@ -33,7 +32,7 @@ namespace Application.BreakingNews.Queries
                     throw new NotFoundException(entityName, request.Id);
                 }
 
-                var dto = item.Mapping<News, BreakingNewsFullInfoVm>();
+                var dto = item.Mapping<News, BreakingNewsFullInfoDTO>();
                 return dto;
             }
         }

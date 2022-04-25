@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Helpers;
-using Application.Interfaces;
+using Application.Interfaces.Repositories;
 using Domain.Entities;
 using MediatR;
 

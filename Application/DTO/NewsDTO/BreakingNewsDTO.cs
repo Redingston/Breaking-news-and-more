@@ -4,9 +4,9 @@ using Application.Common.Mappings;
 using AutoMapper;
 using Domain.Entities;
 
-namespace Application.BreakingNews.Queries
+namespace Application.DTO.NewsDTO
 {
-    public class BreakingNewsVm
+    public class BreakingNewsDTO
     {
         public string Id { get; set; }
         public string Topic { get; set; }

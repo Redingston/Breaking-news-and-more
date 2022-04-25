@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Domain.Entities;
 
-namespace Application.Tags.Queries
+namespace Application.DTO.TagsDTO
 {
-    public class TagVm
+    public class TagDto
     {
         public string Id { get; set; }
         public string Name { get; set; }

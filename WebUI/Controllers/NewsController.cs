@@ -16,13 +16,13 @@ namespace WebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<BreakingNewsVm>>> GetAllNews()
+        public async Task<ActionResult<List<BreakingNewsDTO>>> GetAllNews()
         {
             return await Mediator.Send(new GetAllNewsQuery());
         }
 
         [HttpGet]
-        public async Task<ActionResult<BreakingNewsFullInfoVm>> GetNewsById(string newsId)
+        public async Task<ActionResult<BreakingNewsFullInfoDTO>> GetNewsById(string newsId)
         {
             return await Mediator.Send(new GetNewsByIdQuery {Id = newsId});
         }

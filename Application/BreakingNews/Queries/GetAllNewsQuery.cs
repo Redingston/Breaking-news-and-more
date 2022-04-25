@@ -1,43 +1,35 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Application.Common.Exceptions;
-using Application.Helpers;
-using Application.Interfaces;
-using Application.Interfaces;
-using AutoMapper;
-using AutoMapper.Internal;
-using AutoMapper.QueryableExtensions;
+﻿using Application.Helpers;
+using Application.Interfaces.Repositories;
 using Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Application.DTO.NewsDTO;
 
 namespace Application.BreakingNews.Queries
 {
-    public class GetAllNewsQuery : IRequest<List<BreakingNewsVm>>
+    public class GetAllNewsQuery : IRequest<List<BreakingNewsDTO>>
     {
 
-        public sealed class GetAllNewsQueryHandler : IRequestHandler<GetAllNewsQuery, List<BreakingNewsVm>>
+        public sealed class GetAllNewsQueryHandler : IRequestHandler<GetAllNewsQuery, List<BreakingNewsDTO>>
         {
             private readonly IRepository<News, string> _repository;
-            //private IMapper _mapper;
 
             public GetAllNewsQueryHandler(IRepository<News, string> repository)
             {
                 _repository = repository;
-                // _mapper = mapper;
             }
 
-            public async Task<List<BreakingNewsVm>> Handle(GetAllNewsQuery request,
+            public async Task<List<BreakingNewsDTO>> Handle(GetAllNewsQuery request,
                                                            CancellationToken cancellationToken)
             {
                 var news = await _repository.GetAllAsync(cancellationToken);
-                var list = new List<BreakingNewsVm>();
+                var list = new List<BreakingNewsDTO>();
 
                 foreach (var t in news)
                 {
-                    list.Add(t.Mapping<News, BreakingNewsVm>());
+                    list.Add(t.Mapping<News, BreakingNewsDTO>());
                 }
 
                 return list;

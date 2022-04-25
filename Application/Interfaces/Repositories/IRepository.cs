@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-namespace Application.Interfaces
+namespace Application.Interfaces.Repositories
 {
     public interface IRepository<T1, T2> where T1 : class
     {

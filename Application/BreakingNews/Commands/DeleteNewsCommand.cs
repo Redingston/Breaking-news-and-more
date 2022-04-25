@@ -1,10 +1,9 @@
 ﻿using System;
-using Application.Interfaces;
+using Application.Interfaces.Repositories;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Common.Exceptions;
-using Application.Interfaces;
 using Domain.Entities;
 
 namespace Application.BreakingNews.Commands
