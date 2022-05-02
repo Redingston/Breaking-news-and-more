@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Application.Common.Exceptions
+namespace BreakingNewsCore.Common.Exceptions
 {
     public class NotFoundException : Exception
     {

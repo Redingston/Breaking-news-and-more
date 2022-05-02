@@ -1,4 +1,7 @@
-﻿namespace BreakingNewsCore.Entities
+﻿using BreakingNewsCore.Entities.CategoryEntity;
+using BreakingNewsCore.Entities.NewsEntity;
+
+namespace BreakingNewsCore.Entities.NewsToCategoryEntity
 {
     public class NewsToCategory
     {

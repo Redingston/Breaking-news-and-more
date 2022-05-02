@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Application.Common.Models;
+using BreakingNewsCore.Common.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace Application.Helpers
+namespace BreakingNewsCore.Helpers
 {
     public static class IdentityResultExtensions
     {

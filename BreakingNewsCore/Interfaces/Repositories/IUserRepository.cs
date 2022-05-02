@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Application.Common.Models;
-using Domain.Entities;
+using BreakingNewsCore.Common.Models;
+using BreakingNewsCore.Entities.UserEntity;
 
-namespace Application.Interfaces.Repositories
+namespace BreakingNewsCore.Interfaces.Repositories
 {
     public interface IUserRepository<T1, T2> where T1 : class
     {
@@ -15,7 +15,7 @@ namespace Application.Interfaces.Repositories
 
         Task<(Result Result, string UserId)> CreateUserAsync(T1 user, T2 password);
         Task<(Result Result, string UserId)> UpdateUserAsync(T1 user);
-        Task AddToRoleAsync(User user, string roleName);
+        Task<Result> AddToRoleAsync(User user, string roleName);
 
 
         //Task<Result> DeleteUserAsync(string userId);

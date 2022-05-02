@@ -1,4 +1,4 @@
-﻿namespace Application.Helpers
+﻿namespace BreakingNewsCore.Helpers
 {
     public class JwtOptions
     {

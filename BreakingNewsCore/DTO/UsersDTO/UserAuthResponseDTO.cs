@@ -1,4 +1,4 @@
-﻿namespace Application.DTO.UsersDTO
+﻿namespace BreakingNewsCore.DTO.UsersDTO
 {
     public class UserAuthResponseDTO
     {

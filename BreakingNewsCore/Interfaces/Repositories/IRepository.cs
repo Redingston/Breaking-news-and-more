@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Domain.Entities;
-using MediatR;
 
-namespace Application.Interfaces.Repositories
+namespace BreakingNewsCore.Interfaces.Repositories
 {
     public interface IRepository<T1, T2> where T1 : class
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace Application.Common.Exceptions
+namespace BreakingNewsCore.Common.Exceptions
 {
     public class HttpException : Exception
     {

@@ -1,13 +1,13 @@
-﻿using Application.Helpers;
-using Application.Interfaces.Repositories;
-using Domain.Entities;
+﻿using BreakingNewsCore.Helpers;
 using MediatR;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.DTO.NewsDTO;
+using BreakingNewsCore.DTO.NewsDTO;
+using BreakingNewsCore.Entities.NewsEntity;
+using BreakingNewsCore.Interfaces.Repositories;
 
-namespace Application.BreakingNews.Queries
+namespace BreakingNewsCore.BreakingNews.Queries
 {
     public class GetAllNewsQuery : IRequest<List<BreakingNewsDTO>>
     {

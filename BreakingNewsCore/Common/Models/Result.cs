@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Application.Common.Models
+namespace BreakingNewsCore.Common.Models
 {
     public class Result
     {

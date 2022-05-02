@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Domain.Entities;
-
-namespace Application.DTO.TagsDTO
+﻿namespace BreakingNewsCore.DTO.TagsDTO
 {
     public class TagDTO
     {

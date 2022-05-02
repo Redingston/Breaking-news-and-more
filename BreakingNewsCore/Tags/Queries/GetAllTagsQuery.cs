@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.DTO.TagsDTO;
-using Application.Helpers;
-using Application.Interfaces.Repositories;
-using Domain.Entities;
+using BreakingNewsCore.Helpers;
+using BreakingNewsCore.DTO.TagsDTO;
+using BreakingNewsCore.Entities.TagEntity;
+using BreakingNewsCore.Interfaces.Repositories;
 using MediatR;
 
-namespace Application.Tags.Queries
+namespace BreakingNewsCore.Tags.Queries
 {
     public class GetAllTagsQuery : IRequest<List<TagDTO>>
     {

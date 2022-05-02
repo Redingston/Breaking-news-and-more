@@ -1,9 +1,8 @@
 ﻿using System;
-using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Persistence.Configurations
+namespace BreakingNewsCore.Entities.TagEntity
 {
     public class TagConfiguration : IEntityTypeConfiguration<Tag>
     {

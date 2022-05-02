@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity;
+﻿using System.Collections.Generic;
+using BreakingNewsCore.Entities.CommentEntity;
+using BreakingNewsCore.Entities.NewsToUserEntity;
 using BreakingNewsCore.Entities.RefreshTokenEntity;
+using Microsoft.AspNetCore.Identity;
 
-namespace Domain.Entities
+namespace BreakingNewsCore.Entities.UserEntity
 {
     public class User : IdentityUser
     {
-        public User()
-        {
-            News = new HashSet<NewsToUser>();
-            Comments = new HashSet<Comment>();
-        }
-
-        public ICollection<NewsToUser> News { get; set; }
-        public ICollection<Comment> Comments { get; set; }
-        public ICollection<RefreshToken> RefreshTokens { get; set; }
+        public List<NewsToUser> News { get; set; }
+        public List<Comment> Comments { get; set; }
+        public List<RefreshToken> RefreshTokens { get; set; }
     }
 }

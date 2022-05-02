@@ -1,8 +1,7 @@
-﻿using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Persistence.Configurations
+namespace BreakingNewsCore.Entities.NewsToReactionEntity
 {
     public class NewsToReactionConfiguration : IEntityTypeConfiguration<NewsToReaction>
     {
@@ -16,7 +15,7 @@ namespace Infrastructure.Persistence.Configurations
                    .IsRequired();
 
             builder.HasOne(e => e.Reaction)
-                   .WithMany(e => e.News)
+                   .WithMany(e => e.BreakingNews)
                    .HasForeignKey(e => e.ReactionId)
                    .IsRequired();
         }

@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.BreakingNews.Commands;
-using Application.Interfaces;
-using Domain.Entities;
+using BreakingNewsCore.BreakingNews.Commands;
+using BreakingNewsCore.Entities.CommentEntity;
+using BreakingNewsCore.Entities.NewsEntity;
+using BreakingNewsCore.Entities.NewsToCategoryEntity;
+using BreakingNewsCore.Entities.NewsToReactionEntity;
+using BreakingNewsCore.Entities.NewsToTagEntity;
+using BreakingNewsCore.Entities.NewsToUserEntity;
+using BreakingNewsCore.Interfaces.Repositories;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;

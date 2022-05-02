@@ -1,7 +1,6 @@
-using Application.BreakingNews.Queries;
-using Application.Common.Exceptions;
-using Application.Interfaces;
-using Domain.Entities;
+using BreakingNewsCore.BreakingNews.Queries;
+using BreakingNewsCore.Common.Exceptions;
+using BreakingNewsCore.Interfaces.Repositories;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
@@ -9,6 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using BreakingNewsCore.Entities.CommentEntity;
+using BreakingNewsCore.Entities.NewsEntity;
+using BreakingNewsCore.Entities.NewsToCategoryEntity;
+using BreakingNewsCore.Entities.NewsToReactionEntity;
+using BreakingNewsCore.Entities.NewsToTagEntity;
+using BreakingNewsCore.Entities.NewsToUserEntity;
 
 namespace Application.UnitTests.BLLApplication.BreakingNews.QueriesTests
 {

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using BreakingNewsCore.Entities.UserEntity;
 
 namespace BreakingNewsCore.Entities.CommentEntity
 {

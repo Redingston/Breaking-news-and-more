@@ -1,15 +1,22 @@
-﻿using System;
-using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
-using Application.Interfaces;
-using Domain.Entities;
+﻿using System.Reflection;
+using BreakingNewsCore.Entities.CategoryEntity;
+using BreakingNewsCore.Entities.CommentEntity;
+using BreakingNewsCore.Entities.NewsEntity;
+using BreakingNewsCore.Entities.NewsToCategoryEntity;
+using BreakingNewsCore.Entities.NewsToReactionEntity;
+using BreakingNewsCore.Entities.NewsToTagEntity;
+using BreakingNewsCore.Entities.NewsToUserEntity;
+using BreakingNewsCore.Entities.ReactionEntity;
+using BreakingNewsCore.Entities.UserEntity;
+using BreakingNewsCore.Entities.RefreshTokenEntity;
+using BreakingNewsCore.Entities.RoleEntity;
+using BreakingNewsCore.Entities.TagEntity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence
 {
-    public class ApplicationDbContext : IdentityDbContext<User>, IApplicationDbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
@@ -25,17 +32,22 @@ namespace Infrastructure.Persistence
         public DbSet<Reaction> Reactions { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
-        //public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new CommentConfiguration());
+            modelBuilder.ApplyConfiguration(new NewsToCategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new NewsToReactionConfiguration());
+            modelBuilder.ApplyConfiguration(new NewsToTagConfiguration());
+            modelBuilder.ApplyConfiguration(new NewsToUserConfiguration());
+            modelBuilder.ApplyConfiguration(new ReactionConfiguration());
+            modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration());
+            modelBuilder.ApplyConfiguration(new IdentityRoleConfiguration());
+            modelBuilder.ApplyConfiguration(new TagConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
         }
-
-        //Task<string> IApplicationDbContext.SaveChangesAsync(CancellationToken cancellationToken)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

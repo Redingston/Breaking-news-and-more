@@ -5,17 +5,16 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using Application.Common.Exceptions;
-using Application.Helpers;
-using Application.Interfaces.Services;
-using Domain.Entities;
+using BreakingNewsCore.Common.Exceptions;
+using BreakingNewsCore.Entities.UserEntity;
+using BreakingNewsCore.Helpers;
+using BreakingNewsCore.Interfaces.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Application.Services
+namespace BreakingNewsCore.Services
 {
     public class JwtService : IJwtService
     {

@@ -1,6 +1,6 @@
 using Ardalis.Specification;
 
-namespace Domain.Entities.RefreshTokenEntity
+namespace BreakingNewsCore.Entities.RefreshTokenEntity
 {
     public class RefreshTokens
     {

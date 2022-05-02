@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Application.Interfaces;
-using Application.BreakingNews.Queries;
-using Application.Helpers;
-using Domain.Entities;
+﻿using BreakingNewsCore.BreakingNews.Queries;
+using BreakingNewsCore.Interfaces.Repositories;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using BreakingNewsCore.Entities.NewsEntity;
 
 namespace Application.UnitTests.BLLApplication.BreakingNews.QueriesTests
 {

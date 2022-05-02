@@ -1,6 +1,7 @@
-﻿using Application
+﻿using BreakingNewsCore.Entities.UserEntity;
+using BreakingNewsCore.Interfaces;
 
-namespace Domain.Entities
+namespace BreakingNewsCore.Entities.RefreshTokenEntity
 {
     public class RefreshToken : IBaseEntity
     {

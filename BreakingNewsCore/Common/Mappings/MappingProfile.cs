@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using AutoMapper;
 
-namespace Application.Common.Mappings
+namespace BreakingNewsCore.Common.Mappings
 {
     public class MappingProfile : Profile
     {

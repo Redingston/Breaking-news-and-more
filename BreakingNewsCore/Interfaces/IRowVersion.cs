@@ -1,4 +1,4 @@
-namespace Application.Interfaces
+namespace BreakingNewsCore.Interfaces
 {
     public interface IRowVersion
     { 

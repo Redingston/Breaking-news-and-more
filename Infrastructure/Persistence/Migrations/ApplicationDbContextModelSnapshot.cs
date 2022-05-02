@@ -36,32 +36,32 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2f79c615-8d86-496e-a467-88a4573b6dd4",
+                            Id = "b717f837-7751-4d08-b9c9-8ce854a0eadc",
                             Name = "Top news"
                         },
                         new
                         {
-                            Id = "cf945d56-273f-475f-9210-240095c0b8e2",
+                            Id = "92afd8a8-5e75-494d-86b9-7ff166907a16",
                             Name = "Sports"
                         },
                         new
                         {
-                            Id = "c1d45dc1-ee65-447e-89ea-cfbd96222262",
+                            Id = "fbd50568-b3a0-49fb-a3fe-b9dd787606fa",
                             Name = "Science"
                         },
                         new
                         {
-                            Id = "055af927-c448-40f3-a6cf-9a18f92b87a9",
+                            Id = "f9192ce5-762b-4089-af58-c781ba9a7a14",
                             Name = "Technology"
                         },
                         new
                         {
-                            Id = "1bc9bf9d-a3cf-4b90-b39a-adf9990c1a76",
+                            Id = "211ec497-e299-4194-bc2b-fea6295aec08",
                             Name = "Movies"
                         },
                         new
                         {
-                            Id = "596a95bf-3100-4fc5-a009-bc5fecd85da4",
+                            Id = "899ad7ac-acc2-4a05-9abc-577bed4a8c55",
                             Name = "Game's news"
                         });
                 });
@@ -189,6 +189,27 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Reactions");
                 });
 
+            modelBuilder.Entity("Domain.Entities.RefreshToken", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("Domain.Entities.Tag", b =>
                 {
                     b.Property<string>("Id")
@@ -210,37 +231,37 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b57261e7-3b29-451c-af3d-ca529c88c20b",
+                            Id = "d4a81c80-db0c-4136-ac05-a91ff6f20ef5",
                             Color = "#FFD133",
                             Name = "Popular"
                         },
                         new
                         {
-                            Id = "7ea6afd4-170f-468d-9ce0-fae278c411dd",
+                            Id = "e74d9651-bd1f-4b0c-80ee-ff25be5843e8",
                             Color = "#33BBFF",
                             Name = "Education"
                         },
                         new
                         {
-                            Id = "eed4993d-d28e-4b98-ac3c-8ddd34d79356",
+                            Id = "2097cf69-8b69-4c61-82a3-49bc4b29c96f",
                             Color = "#6833FF",
                             Name = "Unbelievable"
                         },
                         new
                         {
-                            Id = "1a4a90c9-43a5-4c9c-994d-0756a7c7b8f3",
+                            Id = "2dee6497-f15a-4976-829e-fedcd00ec03b",
                             Color = "#07BA1F",
                             Name = "Useful"
                         },
                         new
                         {
-                            Id = "62f57043-fc7a-4f9a-9572-40c9120abc27",
+                            Id = "1c9c0cb9-f166-4b7e-bb0b-8bac949a4f8d",
                             Color = "#000000",
                             Name = "Issue"
                         },
                         new
                         {
-                            Id = "1920993f-017d-4b71-af7f-0e4005b05d1c",
+                            Id = "ede05c92-1b55-400b-b0db-e6d5d6cfea62",
                             Color = "#FF0000",
                             Name = "Non Popular"
                         });
@@ -321,8 +342,9 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
@@ -336,6 +358,22 @@ namespace Infrastructure.Persistence.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "d0206ed4-6471-4147-98fc-845c2fc68357",
+                            ConcurrencyStamp = "6b518f73-f2f0-4551-a1f3-9fb45c946001",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "a6d64e82-dc6c-49c5-aa9a-c1d115bf883e",
+                            ConcurrencyStamp = "4450cef9-d7b4-4118-a571-21a3d09a3ded",
+                            Name = "authorizedUser",
+                            NormalizedName = "AUTHORIZEDUSER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -531,6 +569,17 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.Entities.RefreshToken", b =>
+                {
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -615,6 +664,8 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("News");
+
+                    b.Navigation("RefreshTokens");
                 });
 #pragma warning restore 612, 618
         }

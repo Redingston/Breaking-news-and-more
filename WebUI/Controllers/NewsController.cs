@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.BreakingNews.Commands;
-using Application.BreakingNews.Queries;
+using BreakingNewsCore.BreakingNews.Commands;
+using BreakingNewsCore.BreakingNews.Queries;
+using BreakingNewsCore.DTO.NewsDTO;
 using WebUI.Controllers.Api;
 
 namespace WebUI.Controllers

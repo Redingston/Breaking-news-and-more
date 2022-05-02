@@ -1,4 +1,7 @@
-﻿namespace Domain.Entities
+﻿using BreakingNewsCore.Entities.NewsEntity;
+using BreakingNewsCore.Entities.ReactionEntity;
+
+namespace BreakingNewsCore.Entities.NewsToReactionEntity
 {
     public class NewsToReaction
     {

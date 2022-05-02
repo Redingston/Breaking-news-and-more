@@ -1,8 +1,7 @@
-﻿using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Persistence.Configurations
+namespace BreakingNewsCore.Entities.NewsToTagEntity
 {
     public class NewsToTagConfiguration : IEntityTypeConfiguration<NewsToTag>
     {
@@ -16,7 +15,7 @@ namespace Infrastructure.Persistence.Configurations
                    .IsRequired();
 
             builder.HasOne(e => e.Tag)
-                   .WithMany(e => e.News)
+                   .WithMany(e => e.BreakingNews)
                    .HasForeignKey(e => e.TagId)
                    .IsRequired();
         }

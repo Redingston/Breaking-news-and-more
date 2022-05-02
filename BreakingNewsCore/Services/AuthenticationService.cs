@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Text;
-using System.Threading;
-using Application.Interfaces.Repositories;
-using Application.Interfaces.Services;
-using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
-using Application.Common.Exceptions;
-using Application.DTO.UsersDTO;
+using BreakingNewsCore.Common;
+using BreakingNewsCore.Common.Exceptions;
+using BreakingNewsCore.DTO.UsersDTO;
+using BreakingNewsCore.Interfaces.Repositories;
+using BreakingNewsCore.Interfaces.Services;
+using BreakingNewsCore.Entities.RefreshTokenEntity;
+using BreakingNewsCore.Entities.UserEntity;
 
-namespace Application.Services
+namespace BreakingNewsCore.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
@@ -17,14 +17,14 @@ namespace Application.Services
         protected readonly SignInManager<User> _signInManager;
         protected readonly IJwtService _jwtService;
         protected readonly RoleManager<IdentityRole> _roleManager;
-        protected readonly IRepository<RefreshToken, string> _refreshTokenRepository;
+        protected readonly IRepositoryGeneric<RefreshToken> _refreshTokenRepository;
 
         public AuthenticationService(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             IJwtService jwtService,
             RoleManager<IdentityRole> roleManager,
-            IRepository<RefreshToken, string> refreshTokenRepository)
+            IRepositoryGeneric<RefreshToken> refreshTokenRepository)
            
         {
             _userManager = userManager;
@@ -40,7 +40,7 @@ namespace Application.Services
 
             if (user == null || !await _userManager.CheckPasswordAsync(user, password))
             {
-                throw new HttpException(System.Net.HttpStatusCode.Unauthorized,"Incorrect Login or Password");
+                throw new HttpException(System.Net.HttpStatusCode.Unauthorized, Constants.INCORECT_EMAIL_PASSWORD);
             }
 
             return await GenerateUserTokens(user);
@@ -73,23 +73,24 @@ namespace Application.Services
                 UserId = user.Id
             };
 
-            await _refreshTokenRepository.Insert(rt);
-            await _refreshTokenRepository.SaveChangesAsync(CancellationToken.None);
+            await _refreshTokenRepository.AddAsync(rt);
+            await _refreshTokenRepository.SaveChangesAsync();
 
             return refeshToken;
         }
 
         public async Task LogoutAsync(UserAutorizationDTO userTokensDTO)
         {
-            var refeshTokenFromDb = await _refreshTokenRepository.GetByIdAsync(userTokensDTO.Token);
+            var specification = new RefreshTokens.SearchRefreshToken(userTokensDTO.RefreshToken);
+            var refeshTokenFromDb = await _refreshTokenRepository.GetFirstBySpecAsync(specification);
 
             if (refeshTokenFromDb == null)
             {
                 return;
             }
 
-            _refreshTokenRepository.Delete(refeshTokenFromDb);
-            await _refreshTokenRepository.SaveChangesAsync(CancellationToken.None);
+            await _refreshTokenRepository.DeleteAsync(refeshTokenFromDb);
+            await _refreshTokenRepository.SaveChangesAsync();
         }
 
         public async Task<UserAutorizationDTO> RefreshTokenAsync(UserAutorizationDTO userTokensDTO)
@@ -99,7 +100,7 @@ namespace Application.Services
 
             if (refeshTokenFromDb == null)
             {
-                throw new HttpException(System.Net.HttpStatusCode.BadRequest, "InvalidToken");
+                throw new HttpException(System.Net.HttpStatusCode.BadRequest, Constants.INVALID_TOKEN);
             }
 
             var claims = _jwtService.GetClaimsFromExpiredToken(userTokensDTO.Token);
@@ -107,8 +108,8 @@ namespace Application.Services
             var newRefreshToken = _jwtService.CreateRefreshToken();
 
             refeshTokenFromDb.Token = newRefreshToken;
-            _refreshTokenRepository.Update(refeshTokenFromDb);
-            await _refreshTokenRepository.SaveChangesAsync(CancellationToken.None);
+            await _refreshTokenRepository.UpdateAsync(refeshTokenFromDb);
+            await _refreshTokenRepository.SaveChangesAsync();
 
             var tokens = new UserAutorizationDTO()
             {

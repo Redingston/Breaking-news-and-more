@@ -1,8 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Application.DTO.UsersDTO;
-using Domain.Entities;
+using BreakingNewsCore.DTO.UsersDTO;
 
-namespace Application.Interfaces.Services
+namespace BreakingNewsCore.Interfaces.Services
 {
     public interface IAuthenticationService
     {

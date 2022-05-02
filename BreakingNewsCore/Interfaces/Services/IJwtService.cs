@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
-using Domain.Entities;
+using BreakingNewsCore.Entities.UserEntity;
 
-namespace Application.Interfaces.Services
+namespace BreakingNewsCore.Interfaces.Services
 {
     public interface IJwtService
     {

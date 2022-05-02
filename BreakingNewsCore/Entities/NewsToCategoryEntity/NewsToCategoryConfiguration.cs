@@ -1,8 +1,7 @@
-﻿using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Persistence.Configurations
+namespace BreakingNewsCore.Entities.NewsToCategoryEntity
 {
     public class NewsToCategoryConfiguration : IEntityTypeConfiguration<NewsToCategory>
     {

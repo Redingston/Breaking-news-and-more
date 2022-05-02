@@ -6,15 +6,23 @@ using Microsoft.Extensions.Hosting;
 using MediatR;
 using System;
 using System.Collections.Generic;
-using Application;
-using Application.Interfaces;
-using Domain.Entities;
+using BreakingNewsCore;
+using BreakingNewsCore.Entities.NewsEntity;
+using BreakingNewsCore.Entities.TagEntity;
+using BreakingNewsCore.Entities.UserEntity;
+using BreakingNewsCore.Helpers;
+using BreakingNewsCore.Interfaces;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using BreakingNewsCore.Interfaces.Repositories;
+using BreakingNewsCore.Interfaces.Services;
+using BreakingNewsCore.Services;
+using Infrastructure;
+using WebUI.ServiceExtension;
 
 namespace WebUI
 {
@@ -31,11 +39,12 @@ namespace WebUI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOptions();
-            services.AddApplication();
+            services.AddCustomServices();
             services.AddHttpContextAccessor();
-            var assembly = AppDomain.CurrentDomain.Load("Application");
+            services.AddJwtAuthentication(Configuration);
+            var assembly = AppDomain.CurrentDomain.Load("BreakingNewsCore");
           //  services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
-            services.AddScoped(typeof(IApplicationDbContext), typeof(ApplicationDbContext));
+         
             services.AddMediatR(assembly);
 
             // services.AddTransient<INotifierMediatorService, NotifierMediatorService>();
@@ -48,15 +57,9 @@ namespace WebUI
                                            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             )
                     ;
-            var connectionStringName = "BNAMDataBase";
-            var connectionString = Configuration.GetConnectionString(connectionStringName);
-
-            services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(connectionString));
-            services.AddIdentity<User, IdentityRole>()
-                    .AddEntityFrameworkStores<ApplicationDbContext>()
-                    .AddDefaultTokenProviders();
-
+           
+            services.AddDbContext(Configuration.GetConnectionString("BNAMDataBase"));
+            services.AddIdentityDbContext();
 
             services.AddSwaggerGen(c =>
             {
@@ -92,6 +95,13 @@ namespace WebUI
             services.AddScoped<IRepository<News, string>, NewsRepository>();
             services.AddScoped<IRepository<Tag, string>, TagRepository>();
             services.AddScoped<IUserRepository<User, string>, UserRepository>();
+            services.AddScoped<IUserRoleRepository<IdentityRole, string>, UserRoleRepository>();
+           // services.AddScoped<IRepository<RefreshToken, string>, RefreshTokenRepository>();
+           
+            services.Configure<JwtOptions>(Configuration);
+            services.AddAutoMapper();
+            services.AddRepositories();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

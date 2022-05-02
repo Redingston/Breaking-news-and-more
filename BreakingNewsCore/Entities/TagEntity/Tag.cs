@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using BreakingNewsCore.Entities.NewsToTagEntity;
 
-namespace Domain.Entities
+namespace BreakingNewsCore.Entities.TagEntity
 {
     public class Tag
     {
@@ -9,6 +9,6 @@ namespace Domain.Entities
         public string Name { get; set; }
         public string Color { get; set; }
 
-        public ICollection<NewsToTag> News { get; set; }
+        public List<NewsToTag> BreakingNews { get; set; }
     }
 }

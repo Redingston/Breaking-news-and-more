@@ -1,18 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using BreakingNewsCore.Entities.NewsToCategoryEntity;
 
-namespace Domain.Entities
+namespace BreakingNewsCore.Entities.CategoryEntity
 {
     public class Category
     {
-        public Category()
-        {
-            News = new HashSet<NewsToCategory>();
-        }
-
         public string Id { get; set; }
         public string Name { get; set; }
 
-        public ICollection<NewsToCategory> News { get; set; }
+        public List<NewsToCategory> News { get; set; }
     }
 }

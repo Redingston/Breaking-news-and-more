@@ -1,13 +1,13 @@
-﻿using Application.DTO.NewsDTO;
-using Application.Common.Exceptions;
-using Application.Helpers;
-using Application.Interfaces.Repositories;
-using Domain.Entities;
+﻿using BreakingNewsCore.Helpers;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using BreakingNewsCore.Common.Exceptions;
+using BreakingNewsCore.DTO.NewsDTO;
+using BreakingNewsCore.Entities.NewsEntity;
+using BreakingNewsCore.Interfaces.Repositories;
 
-namespace Application.BreakingNews.Queries
+namespace BreakingNewsCore.BreakingNews.Queries
 {
     public class GetNewsByIdQuery : IRequest<BreakingNewsFullInfoDTO>
     {

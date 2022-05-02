@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Application.Interfaces;
-using Domain.Entities;
+using BreakingNewsCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 

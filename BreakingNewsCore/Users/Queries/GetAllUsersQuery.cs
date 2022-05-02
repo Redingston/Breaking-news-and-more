@@ -3,7 +3,7 @@
 //using System.Linq;
 //using System.Threading;
 //using System.Threading.Tasks;
-//using Application.Interfaces;
+//using BreakingNewsCore.Interfaces;
 //using AutoMapper;
 //using AutoMapper.QueryableExtensions;
 //using Domain.Entities;
@@ -11,7 +11,7 @@
 //using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 //using Microsoft.EntityFrameworkCore;
 
-//namespace Application.Users.Queries
+//namespace BreakingNewsCore.Users.Queries
 //{
 //    public class GetAllUsersQuery : IRequest<List<UserVm>>
 //    {

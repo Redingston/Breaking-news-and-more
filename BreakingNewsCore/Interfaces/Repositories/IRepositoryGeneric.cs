@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Ardalis.Specification;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace Application.Interfaces.Repositories
+namespace BreakingNewsCore.Interfaces.Repositories
 {
     public interface IRepositoryGeneric<TEntity> where TEntity: class, IBaseEntity
     {

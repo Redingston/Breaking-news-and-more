@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Interfaces.Repositories;
-using Domain.Entities;
+using BreakingNewsCore.Entities.NewsEntity;
+using BreakingNewsCore.Interfaces.Repositories;
 using MediatR;
 
-namespace Application.BreakingNews.Commands
+namespace BreakingNewsCore.BreakingNews.Commands
 {
     public class CreateNewsCommand : IRequest<string>
     {
@@ -23,7 +23,7 @@ namespace Application.BreakingNews.Commands
 
             public async Task<string> Handle(CreateNewsCommand request, CancellationToken cancellationToken)
             {
-                var news = new Domain.Entities.News()
+                var news = new News()
                 {
                     Id = Guid.NewGuid().ToString(),
                     Text = request.Text,

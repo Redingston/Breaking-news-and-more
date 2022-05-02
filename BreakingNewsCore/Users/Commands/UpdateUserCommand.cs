@@ -1,12 +1,12 @@
-﻿using Application.Common.Models;
-using MediatR;
+﻿using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Common.Exceptions;
-using Application.Interfaces.Repositories;
-using Domain.Entities;
+using BreakingNewsCore.Common.Exceptions;
+using BreakingNewsCore.Common.Models;
+using BreakingNewsCore.Entities.UserEntity;
+using BreakingNewsCore.Interfaces.Repositories;
 
-namespace Application.Users.Commands
+namespace BreakingNewsCore.Users.Commands
 {
     public class UpdateUserCommand : IRequest<(Result result, string userId)>
     {

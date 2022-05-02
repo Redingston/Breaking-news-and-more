@@ -1,12 +1,12 @@
-﻿using Application.Common.Exceptions;
-using Application.Interfaces.Repositories;
-using Domain.Entities;
-using MediatR;
+﻿using MediatR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using BreakingNewsCore.Common.Exceptions;
+using BreakingNewsCore.Entities.NewsEntity;
+using BreakingNewsCore.Interfaces.Repositories;
 
-namespace Application.BreakingNews.Commands
+namespace BreakingNewsCore.BreakingNews.Commands
 {
     public class UpdateNewsCommand : IRequest<string>
     {

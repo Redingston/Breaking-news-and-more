@@ -1,4 +1,7 @@
-﻿namespace Domain.Entities
+﻿using BreakingNewsCore.Entities.NewsEntity;
+using BreakingNewsCore.Entities.TagEntity;
+
+namespace BreakingNewsCore.Entities.NewsToTagEntity
 {
     public class NewsToTag
     {

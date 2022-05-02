@@ -1,9 +1,8 @@
-﻿using Application.Interfaces.Repositories;
-using Domain.Entities;
+﻿using BreakingNewsCore.Interfaces.Repositories;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
+using BreakingNewsCore.Entities.NewsEntity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repositories

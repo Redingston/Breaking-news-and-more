@@ -1,12 +1,11 @@
-﻿using System;
-using Application.Interfaces.Repositories;
-using MediatR;
+﻿using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Common.Exceptions;
-using Domain.Entities;
+using BreakingNewsCore.Common.Exceptions;
+using BreakingNewsCore.Entities.NewsEntity;
+using BreakingNewsCore.Interfaces.Repositories;
 
-namespace Application.BreakingNews.Commands
+namespace BreakingNewsCore.BreakingNews.Commands
 {
     public class DeleteNewsCommand : IRequest
     {

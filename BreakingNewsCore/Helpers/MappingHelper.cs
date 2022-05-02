@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Application.Helpers
+namespace BreakingNewsCore.Helpers
 {
     public static class MappingHelper
     {

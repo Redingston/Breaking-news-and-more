@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using Application.Common.Mappings;
-using AutoMapper;
-using Domain.Entities;
-
-namespace Application.DTO.UsersDTO
+﻿namespace BreakingNewsCore.DTO.UsersDTO
 {
     public class UserDTO
     {
